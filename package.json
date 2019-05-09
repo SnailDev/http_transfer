@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
-    "request": "^2.88.0"
+    "http": "0.0.0",
+    "http-proxy": "^1.17.0",
+    "querystring": "^0.2.0"
   }
 }

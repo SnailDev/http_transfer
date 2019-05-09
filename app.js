@@ -1,23 +1,18 @@
-const express = require('express');
-const request = require('request');
-const app = express();
+var http = require('http');
+var httpProxy = require('http-proxy');
+var querystring = require('querystring');
 
-app.use('/', (req, res) => {
-    var url = req.query.url;
-    if (!url) {
-        res.send("请求的url不能为空")
-    };
-    console.log(url);
+var proxy = httpProxy.createProxyServer({});
 
-    // 安全 url 白名单
-
-    request(url, { method: req.method, body: req.body }, (error, response, body) => {
-        if (error) {
-            res.send(error);
-        }
-
-        res.send(body);
+http.createServer(function (req, res) {
+    delete req.headers.host;
+    var query = querystring.parse(req.url.replace("/?", ""));
+    req.url = "/";
+    proxy.web(req, res, {
+        target: query.url,
+        changeOrigin: true
+    }, (e) => {
+        console.log("proxy error call back ");
+        console.log(e);
     });
-});
-
-app.listen(3003, () => console.log('Example app listening on port 3000!'));
+}).listen(3003);
