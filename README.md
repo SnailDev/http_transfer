@@ -11,10 +11,12 @@ a proxy to transfer http to https for gitpages
 - request
 - http-proxy
 
+```bash
 |
   ----app.js     #主代码逻辑
   |
   ----hosts.json #host白名单
+```
 
 ### 使用方法
 ```bash
